@@ -5,4 +5,5 @@ var app = angular.module('AndragAndropDemo', [ 'ngMaterial', 'hljs', 'AndragAndr
    .accentPalette('indigo');
 })
 .controller('MainController', function(DragInfo) {
+   this.fullDemo = false;
 });

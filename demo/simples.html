@@ -7,6 +7,9 @@
       <!-- Angular Material -->
       <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css" />
 
+      <!-- Material Icon -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
       <!-- Highlight.js -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/atom-one-dark.min.css" />
 
@@ -39,12 +42,14 @@
             </md-list>
          </md-sidenav>
          <div class="demo-page" layout="column" flex>
-            <h1>Simples</h1>
-            <p>
-                Cria um objeto e um container. Ao arrastar o objeto até o container uma mensagem de alerta contendo os dados do objeto é exibida.
-            </p>
-            <div layout="row" flex>
-               <md-tabs class="md-primary" flex>
+            <div class="description" ng-class="{fullscreen: ctrl.fullDemo}">
+               <h1>Simples</h1>
+               <p>
+                   Cria um objeto e um container. Ao arrastar o objeto até o container uma mensagem de alerta contendo os dados do objeto é exibida.
+               </p>
+            </div>
+            <div class="example" layout="row">
+               <md-tabs class="md-primary" ng-class="{fullscreen: ctrl.fullDemo}" flex>
                   <md-tab label="HTML">
                      <hljs hljs-no-escape hljs-language="html">
 &lt;div ng-controller="DemoController as ctrl">
@@ -81,7 +86,9 @@ app.controller('DemoController', function(DragInfo) {
                      </hljs>
                   </md-tab>
                </md-tabs>
-               <div id="demo" ng-include="'./demo-simples.html'" flex>
+               <div id="demo" flex>
+                  <i class="material-icons fullscreen-button" ng-click="ctrl.fullDemo = !ctrl.fullDemo">{{ctrl.fullDemo ? 'fullscreen_exit' : 'fullscreen'}}</i>
+                  <div ng-include="'./demo-simples.html'"></div>
                </div>
             </div>
          </div>

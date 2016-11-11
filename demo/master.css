@@ -38,7 +38,16 @@ a, a:link, a:visited, a:hover {
 .demo-page > div {
    margin: 16px 0;
 }
+.demo-page .description {
+   transition: flex .3s ease-in-out, margin .3s ease-in-out;
+   flex: 1;
+   overflow: hidden;
+}
+.demo-page .example {
+   flex: 3;
+}
 .demo-page md-tabs {
+   transition: flex .3s ease-in-out, margin .3s ease-in-out;
    height: 100%;
    max-width: 840px;
    margin: 0 16px;
@@ -57,13 +66,38 @@ a, a:link, a:visited, a:hover {
    word-wrap: break-word;
    margin: 0;
 }
-
 .demo-page md-tabs code {
    height: 100%;
    overflow-y: auto;
    padding: 16px;
 }
+.demo-page .description.fullscreen, .demo-page md-tabs.fullscreen {
+   flex: 0;
+   margin: 0
+}
+
+
+.fullscreen-button {
+   position: absolute;
+   top: 0;
+   left: 0;
+   font-size: 32px;
+   outline: 0;
+   background-color: rgba(0, 0, 0, 0);
+   opacity: .3;
+   transition: all .3s ease-in-out;
+   z-index: 100
+}
+.fullscreen-button:hover {
+   background-color: rgba(0, 0, 0, .5);
+   opacity: 1;
+}
 
 #demo {
-   position: relative
+   position: relative;
+   margin: 0 16px;
+}
+#demo > div {
+   width: 100%;
+   height: 100%;
 }
