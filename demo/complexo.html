@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <title>Andrag Androp - Simples</title>
+
+      <!-- Angular Material -->
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css" />
+
+      <!-- Highlight.js -->
+      <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/atom-one-dark.min.css" />
+
+      <!-- Page -->
+      <link rel="stylesheet" href="./master.css" />
+
+      <!-- Demo -->
+      <link rel="stylesheet" href="./demo-complexo.css" />
+   </head>
+   <body ng-app="AndragAndropDemo" ng-controller="MainController as ctrl" ng-cloak layout="column">
+      <md-toolbar md-whiteframe="6">
+         <div class="md-toolbar-tools">
+            <span><a href="../index.html">Andrag Androp</a></span>
+            <span flex></span>
+            <md-button md-colors="{ background: 'accent-A400' }" href="https://github.com/martinsadw/andrag-androp">Github</md-button>
+         </div>
+      </md-toolbar>
+      <section layout="row" flex>
+         <md-sidenav class="md-sidenav-left" md-is-locked-open="$mdMedia('gt-sm')" md-colors="{ background: 'primary-700' } " md-whiteframe="4">
+            <md-list>
+               <md-subheader class="md-no-sticky" md-colors="{ background: 'primary-700', color: 'grey-A100-0.7' }">
+                  Demonstrações
+               </md-subheader>
+               <md-list-item class="md-1-line" ng-href="simples.html">
+                  Simples
+               </md-list-item>
+               <md-list-item class="md-1-line" ng-href="complexo.html">
+                  Complexo
+               </md-list-item>
+            </md-list>
+         </md-sidenav>
+         <div class="demo-page" layout="column" flex>
+            <h1>Simples</h1>
+            <p>
+                Cria um objeto e um container. Ao arrastar o objeto até o container uma mensagem de alerta contendo os dados do objeto é exibida.
+            </p>
+            <div layout="row" flex>
+               <md-tabs class="md-primary" flex>
+                  <md-tab label="HTML">
+                     <hljs hljs-no-escape hljs-language="html">
+&lt;div ng-controller="DemoController as ctrl" style="width: 100%; height: 100%">
+  &lt;div layout="column" style="width: 100%; height: 100%">
+    &lt;div flex="50" layout="row">
+      &lt;div class="scroll" flex>
+        &lt;md-switch ng-model="ctrl.list1Enabled">Enable List&lt;/md-switch>
+        &lt;div ng-repeat="item in ctrl.data.list1" id="{{item.id}}" class="item"
+             rtm-drag-object="item"
+             rtm-drag-type="block/block"
+             rtm-disable-if="!ctrl.list1Enabled"
+             rtm-drag-action="copy"
+             rtm-ondragend="console.log('success!')">
+          &lt;h1>{{item.title}}&lt;/h1>
+          &lt;p>{{item.desc}}&lt;/p>
+        &lt;/div>
+      &lt;/div>
+      &lt;div class="scroll" flex>
+        &lt;md-switch ng-model="ctrl.list2Enabled">Enable List&lt;/md-switch>
+        &lt;div ng-repeat="item in ctrl.data.list2" id="{{item.id}}" class="item"
+             rtm-drag-object="item"
+             rtm-drag-type="image/jpeg"
+             rtm-disable-if="!ctrl.list2Enabled"
+             rtm-onmove="ctrl.removeItem(ctrl.data.list2, item)">
+          &lt;h1>{{item.title}}&lt;/h1>
+          &lt;p>{{item.desc}}&lt;/p>
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+    &lt;div class="scroll" id="trash" flex="50"
+         rtm-drag-container="ctrl.data.trash"
+         rtm-allowed-types="block/block image/jpeg"
+         rtm-ondrop="ctrl.createObject(ctrl.data.trash, event)"
+         rtm-disable-if="ctrl.data.trash.length >= ctrl.maxTrashSize">
+      &lt;div ng-repeat="item in ctrl.data.trash" id="{{item.id}}" class="item block"
+           ng-style="{'position': 'absolute', 'top': (item.y - 50)+'px', 'left': (item.x - 50)+'px'}"
+           rtm-drag-object="item"
+           rtm-drag-type="image/jpeg"
+           rtm-drag-action="move"
+           rtm-onmove="ctrl.move(ctrl.data.trash, item, event)">
+        &lt;h1>{{item.title}}&lt;/h1>
+        &lt;p>{{item.desc}}&lt;/p>
+      &lt;/div>
+    &lt;/div>
+  &lt;/div>
+  &lt;div class="item" ng-show="ctrl.hasData()"
+       ng-style="{'pointer-events': 'none', 'width': '100px', 'z-index': '70', 'position': 'fixed', 'top': (ctrl.mouseY() - 50)+'px', 'left': (ctrl.mouseX() - 50)+'px'}">
+    &lt;h1>{{ctrl.dragData().title}}&lt;/h1>
+    &lt;p>{{ctrl.dragData().desc}}&lt;/p>
+  &lt;/div>
+&lt;/div>
+                     </hljs>
+                  </md-tab>
+                  <md-tab label="JS">
+                     <hljs hljs-language="javascript">
+app.controller('DemoController', function($scope, $interval, Data, DragInfo, UUID) {
+  this.dragData = DragInfo.dragData;
+  this.hasData = DragInfo.hasData;
+  this.type = DragInfo.type;
+  this.actionAllowed = DragInfo.actionAllowed;
+  this.mouseX = DragInfo.x;
+  this.mouseY = DragInfo.y;
+
+  this.list1Enabled = true;
+  this.list2Enabled = true;
+
+  this.maxTrashSize = 6;
+
+  this.createObject = function(list, event) {
+    var data = event.data; // Should I copy the object?
+
+    var item = list.find(function(element) { return element.id == data.id; });
+    if(list.indexOf(item) >= 0) return false; // Check if object is already on the container
+
+    data.id = UUID.new();
+    data.x = event.elemX;
+    data.y = event.elemY;
+    list.push(data);
+
+    event.actionUsed = "copy"
+  }
+  this.removeItem = function(list, data) {
+    var item = list.find(function(element) { return element.id == data.id; });
+    var itemIndex = list.indexOf(item);
+
+    if(itemIndex >= 0)
+    {
+      $scope.$apply(function() {
+        list.splice(itemIndex, 1);
+      });
+    }
+  }
+  this.move = function(list, data, event) {
+    var item = list.find(function(element) { return element.id == data.id; });
+
+    $scope.$apply(function() {
+      item.x = event.elemX;
+      item.y = event.elemY;
+    });
+  }
+
+  this.data = Data;
+
+  // Por alguma razão os valores so atualizam com o '$interval'
+  $interval(function(){}, 33);
+})
+.factory('Data', function(UUID) {
+  return {
+    list1: [
+      { id: UUID.new(), title: 'A', desc: 'aaaaaa' },
+      { id: UUID.new(), title: 'B', desc: 'bbbbbb' }
+    ],
+    list2: [
+      { id: UUID.new(), title: 'D', desc: 'cccccc' },
+      { id: UUID.new(), title: 'E', desc: 'dddddd' }
+    ],
+    trash: [
+      { id: UUID.new(), title: '1', desc: '111111', x: 100, y: 100 },
+      { id: UUID.new(), title: '2', desc: '222222', x: 300, y: 100 },
+      { id: UUID.new(), title: '3', desc: '333333', x: 100, y: 300 }
+    ]
+  };
+});
+                     </hljs>
+                  </md-tab>
+                  <md-tab label="CSS">
+                     <hljs hljs-language="css">
+#demo *[draggable=true] {
+  cursor: move;
+}
+
+#debug-info {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 250px;
+  background-color: #999;
+  overflow: hidden;
+  z-index: 1
+}
+
+#demo .scroll {
+  border: 2px solid transparent;
+  overflow-y: scroll;
+  position: relative;
+}
+
+#demo .block {
+  display: inline-block;
+  width: 100px;
+}
+
+#demo .item {
+  height: 100px;
+  background-color: #828282;
+  border-radius: 8px;
+  margin: 4px;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  box-shadow: 0 2px 2px #000000;
+  border: 2px solid #424242;
+}
+#demo .item.rtm-dragging {
+  opacity: 0.7;
+  box-shadow: 0 4px 8px #000000;
+}
+#demo .item h1 {
+  color: #ffffff;
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin: 0;
+  line-height: 50px;
+  background-color: #424242;
+}
+#demo .item p {
+  color: #ffffff;
+  padding: 0 16px;
+}
+
+#demo .rtm-dragstart[rtm-drag-container]:not(.rtm-dragging) {
+  border: 2px dashed #000;
+}
+
+#demo .ng-hide.ng-hide-animate {
+  display: none !important;
+}
+
+                     </hljs>
+                  </md-tab>
+               </md-tabs>
+               <div id="demo" ng-include="'./demo-complexo.html'" flex>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- Angular -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+
+      <!-- Angular Material -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+
+
+      <!-- Highlight.js -->
+      <!-- https://github.com/pc035860/angular-highlightjs -->
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+      <script src="http://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+
+      <!-- Andrag Androp -->
+      <script src="../andrag-androp.js"></script>
+
+      <!-- Page -->
+      <script src="./app.js"></script>
+
+      <!-- Demo -->
+      <script src="./demo-complexo.js"></script>
+   </body>
+</html>

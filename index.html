@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <title>Andrag Androp</title>
+
+      <base href="">
+
+      <!-- Angular Material -->
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css" />
+
+      <!-- Highlight.js -->
+      <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/atom-one-dark.min.css" />
+
+      <!-- Page -->
+      <link rel="stylesheet" href="./demo/master.css" />
+   </head>
+   <body ng-app="AndragAndropDemo" ng-controller="MainController as ctrl" ng-cloak layout="column">
+      <md-toolbar md-whiteframe="6">
+         <div class="md-toolbar-tools">
+            <span><a href="#">Andrag Androp</a></span>
+            <span flex></span>
+            <md-button md-colors="{ background: 'accent-A400' }" href="https://github.com/martinsadw/andrag-androp">Github</md-button>
+         </div>
+      </md-toolbar>
+      <section layout="row" flex>
+         <div class="home-page" layout="column" flex>
+            <h1>Drag &amp; Drop para AngularJS</h1>
+            <img src="./demo/logo-andrag-androp.png" alt="Andrag Androp" />
+            <p>
+               Crie aplicações web com funcionalidades de arrastar e soltar de forma simples utilizando apenas AngularJS. Sem jQuery.
+            </p>
+            <p>
+               <md-button md-colors="{ background: 'accent-A400' }" href="./demo/simples.html">Demonstrações</md-button>
+            </p>
+         </div>
+      </section>
+
+      <!-- Angular -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+
+      <!-- Angular Material -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+
+
+      <!-- Highlight.js -->
+      <!-- https://github.com/pc035860/angular-highlightjs -->
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+      <script src="http://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+
+      <!-- Andrag Androp -->
+      <script src="./andrag-androp.js"></script>
+
+      <!-- Page -->
+      <script src="./demo/app.js"></script>
+   </body>
+</html>

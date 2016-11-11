@@ -1,0 +1,60 @@
+#demo *[draggable=true] {
+  cursor: move;
+}
+
+#debug-info {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 250px;
+  background-color: #999;
+  overflow: hidden;
+  z-index: 1
+}
+
+#demo .scroll {
+  border: 2px solid transparent;
+  overflow-y: scroll;
+  position: relative;
+}
+
+#demo .block {
+  display: inline-block;
+  width: 100px;
+}
+
+#demo .item {
+  height: 100px;
+  background-color: #828282;
+  border-radius: 8px;
+  margin: 4px;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  box-shadow: 0 2px 2px #000000;
+  border: 2px solid #424242;
+}
+#demo .item.rtm-dragging {
+  opacity: 0.7;
+  box-shadow: 0 4px 8px #000000;
+}
+#demo .item h1 {
+  color: #ffffff;
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin: 0;
+  line-height: 50px;
+  background-color: #424242;
+}
+#demo .item p {
+  color: #ffffff;
+  padding: 0 16px;
+}
+
+#demo .rtm-dragstart[rtm-drag-container]:not(.rtm-dragging) {
+  border: 2px dashed #000;
+}
+
+#demo .ng-hide.ng-hide-animate {
+  display: none !important;
+}

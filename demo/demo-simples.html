@@ -1,0 +1,4 @@
+<div ng-controller="DemoController as ctrl">
+   <div class="block" rtm-drag-object="{name: 'foo'}">Drag</div>
+   <div class="block" rtm-drag-container="list" rtm-ondrop="ctrl.eventAlert(event)">Drop</div>
+</div>

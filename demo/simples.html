@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <title>Andrag Androp - Simples</title>
+
+      <!-- Angular Material -->
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css" />
+
+      <!-- Highlight.js -->
+      <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/atom-one-dark.min.css" />
+
+      <!-- Page -->
+      <link rel="stylesheet" href="./master.css" />
+
+      <!-- Demo -->
+      <link rel="stylesheet" href="./demo-simples.css" />
+   </head>
+   <body ng-app="AndragAndropDemo" ng-controller="MainController as ctrl" ng-cloak layout="column">
+      <md-toolbar md-whiteframe="6">
+         <div class="md-toolbar-tools">
+            <span><a href="../index.html">Andrag Androp</a></span>
+            <span flex></span>
+            <md-button md-colors="{ background: 'accent-A400' }" href="https://github.com/martinsadw/andrag-androp">Github</md-button>
+         </div>
+      </md-toolbar>
+      <section layout="row" flex>
+         <md-sidenav class="md-sidenav-left" md-is-locked-open="$mdMedia('gt-sm')" md-colors="{ background: 'primary-700' } " md-whiteframe="4">
+            <md-list>
+               <md-subheader class="md-no-sticky" md-colors="{ background: 'primary-700', color: 'grey-A100-0.7' }">
+                  Demonstrações
+               </md-subheader>
+               <md-list-item class="md-1-line" ng-href="simples.html">
+                  Simples
+               </md-list-item>
+               <md-list-item class="md-1-line" ng-href="complexo.html">
+                  Complexo
+               </md-list-item>
+            </md-list>
+         </md-sidenav>
+         <div class="demo-page" layout="column" flex>
+            <h1>Simples</h1>
+            <p>
+                Cria um objeto e um container. Ao arrastar o objeto até o container uma mensagem de alerta contendo os dados do objeto é exibida.
+            </p>
+            <div layout="row" flex>
+               <md-tabs class="md-primary" flex>
+                  <md-tab label="HTML">
+                     <hljs hljs-no-escape hljs-language="html">
+&lt;div ng-controller="DemoController as ctrl">
+   &lt;div class="block" rtm-drag-object="{name: 'foo'}">Drag&lt;/div>
+   &lt;div class="block" rtm-drag-container="list" rtm-ondrop="ctrl.eventAlert(event)">Drop&lt;/div>
+&lt;/div>
+                     </hljs>
+                  </md-tab>
+                  <md-tab label="JS">
+                     <hljs hljs-language="javascript">
+app.controller('DemoController', function(DragInfo) {
+   this.eventAlert = function(event) {
+      alert(event.data.name);
+   }
+});
+                     </hljs>
+                  </md-tab>
+                  <md-tab label="CSS">
+                     <hljs hljs-language="css">
+#demo .block {
+   display: inline-block;
+   width: 100px;
+   height: 100px;
+
+   line-height: 100px;
+   text-align: center;
+
+   margin: 16px;
+   border-radius: 4px;
+
+   background-color: #222;
+   color: #fff;
+}
+                     </hljs>
+                  </md-tab>
+               </md-tabs>
+               <div id="demo" ng-include="'./demo-simples.html'" flex>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- Angular -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+
+      <!-- Angular Material -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+
+
+      <!-- Highlight.js -->
+      <!-- https://github.com/pc035860/angular-highlightjs -->
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+      <script src="http://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+
+      <!-- Andrag Androp -->
+      <script src="../andrag-androp.js"></script>
+
+      <!-- Page -->
+      <script src="./app.js"></script>
+
+      <!-- Demo -->
+      <script src="./demo-simples.js"></script>
+   </body>
+</html>

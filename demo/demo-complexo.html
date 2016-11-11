@@ -1,0 +1,49 @@
+<div ng-controller="DemoController as ctrl" style="width: 100%; height: 100%">
+  <div layout="column" style="width: 100%; height: 100%">
+    <div flex="50" layout="row">
+      <div class="scroll" flex>
+        <md-switch ng-model="ctrl.list1Enabled">Enable List</md-switch>
+        <div ng-repeat="item in ctrl.data.list1" id="{{item.id}}" class="item"
+             rtm-drag-object="item"
+             rtm-drag-type="block/block"
+             rtm-disable-if="!ctrl.list1Enabled"
+             rtm-drag-action="copy"
+             rtm-ondragend="console.log('success!')">
+          <h1>{{item.title}}</h1>
+          <p>{{item.desc}}</p>
+        </div>
+      </div>
+      <div class="scroll" flex>
+        <md-switch ng-model="ctrl.list2Enabled">Enable List</md-switch>
+        <div ng-repeat="item in ctrl.data.list2" id="{{item.id}}" class="item"
+             rtm-drag-object="item"
+             rtm-drag-type="image/jpeg"
+             rtm-disable-if="!ctrl.list2Enabled"
+             rtm-onmove="ctrl.removeItem(ctrl.data.list2, item)">
+          <h1>{{item.title}}</h1>
+          <p>{{item.desc}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="scroll" id="trash" flex="50"
+         rtm-drag-container="ctrl.data.trash"
+         rtm-allowed-types="block/block image/jpeg"
+         rtm-ondrop="ctrl.createObject(ctrl.data.trash, event)"
+         rtm-disable-if="ctrl.data.trash.length >= ctrl.maxTrashSize">
+      <div ng-repeat="item in ctrl.data.trash" id="{{item.id}}" class="item block"
+           ng-style="{'position': 'absolute', 'top': (item.y - 50)+'px', 'left': (item.x - 50)+'px'}"
+           rtm-drag-object="item"
+           rtm-drag-type="image/jpeg"
+           rtm-drag-action="move"
+           rtm-onmove="ctrl.move(ctrl.data.trash, item, event)">
+        <h1>{{item.title}}</h1>
+        <p>{{item.desc}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="item" ng-show="ctrl.hasData()"
+       ng-style="{'pointer-events': 'none', 'width': '100px', 'z-index': '70', 'position': 'fixed', 'top': (ctrl.mouseY() - 50)+'px', 'left': (ctrl.mouseX() - 50)+'px'}">
+    <h1>{{ctrl.dragData().title}}</h1>
+    <p>{{ctrl.dragData().desc}}</p>
+  </div>
+</div>
